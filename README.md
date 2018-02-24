@@ -15,7 +15,7 @@
 docker run --tty -d --name="cuberite" -p 8080:8080 -p 25565:25565 beevelop/cuberite
 ```
 
-The server should be accessible via Port `25565`. There is a webadmin interface available at `8080` (default login `admin` and password `swordfish`).
+The server should be accessible via Port `25565`. There is a webadmin interface available at `8080` (default login `admin` and password `Swordfish`).
 
 ## Configuration
 - `ADMIN_USERNAME` (default: `admin`): The username for the webadmin interface
