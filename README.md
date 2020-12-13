@@ -1,10 +1,4 @@
-[![Travis](https://shields.beevelop.com/travis/beevelop/docker-cuberite.svg?style=flat-square)](https://travis-ci.org/beevelop/docker-cuberite)
-[![Pulls](https://shields.beevelop.com/docker/pulls/beevelop/cuberite.svg?style=flat-square)](https://links.beevelop.com/d-cuberite)
-[![Layers](https://shields.beevelop.com/docker/image/layers/beevelop/cuberite/latest.svg?style=flat-square)](https://links.beevelop.com/d-cuberite)
-[![Size](https://shields.beevelop.com/docker/image/size/beevelop/cuberite/latest.svg?style=flat-square)](https://links.beevelop.com/d-cuberite)
-[![GitHub release](https://shields.beevelop.com/github/release/beevelop/docker-cuberite.svg?style=flat-square)](https://github.com/beevelop/docker-cuberite/releases)
-![Badges](https://shields.beevelop.com/badge/badges-7-brightgreen.svg?style=flat-square)
-[![Beevelop](https://links.beevelop.com/honey-badge)](https://beevelop.com)
+**Yet another fork. Not ready, use at your risk.**
 
 # [Cuberite](https://cuberite.org/) for whale lovers
 
