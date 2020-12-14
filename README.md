@@ -1,4 +1,4 @@
-**Yet another fork. Might not be ready, use at your risk.**
+__Yet another fork. Might not be ready, use at your risk.__
 
 ## [Cuberite](https://cuberite.org/) for whale lovers
 
