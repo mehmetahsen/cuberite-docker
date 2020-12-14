@@ -1,0 +1,10 @@
+export DOCKER_BUILDKIT=1
+alias konbuild='docker build --tag cuberite .'
+alias konfol='docker logs --follow cuberite'
+alias konrun='docker run --name cuberite --publish 8080:8080 --publish 25565:25565 --detach --tty cuberite'
+alias konrunmount='docker run --name cuberite --publish 8080:8080 --publish 25565:25565 --volume cuberite:/cuberite --detach --tty cuberite'
+alias konrunlocal='docker run --name cuberite --publish 8080:8080 --publish 25565:25565 --volume "$(pwd)"/cuberite:/cuberite --detach --tty cuberite'
+alias konrm='docker container rm --force --volumes cuberite'
+alias konsh='docker exec --tty --interactive cuberite /bin/bash'
+alias konoverrun='konrm && konbuild && konrun && konfol'
+alias konprune='docker kill $(docker ps -a -q) || docker container prune --force && docker system prune --force --all --volumes'
