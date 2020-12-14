@@ -1,2 +1,6 @@
-[User:${ADMIN_USERNAME}]
-Password=${ADMIN_PASSWORD}
+[User:${CUBERITE_USERNAME}]
+Password=${CUBERITE_PASSWORD}
+
+[WebAdmin]
+Enabled=1
+Ports=8080
