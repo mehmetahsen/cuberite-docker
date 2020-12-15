@@ -12,21 +12,10 @@ ENV CUBERITE_USERNAME="admin" \
     PGID="46372" \
     PUID="46372"
     
-#RUN addgroup --system --gid $PGID cuberite && \
-#    adduser --system --disabled-password  --disabled-login --no-create-home --uid $PUID --gid $PGID cuberite && \
-#    chown cuberite:cuberite -R . 
-
-#USER cuberite
-
 WORKDIR /cuberite
-
-#COPY --chown=cuberite:cuberite  entrypoint.sh    /entrypoint.sh
-#COPY --chown=cuberite:cuberite  webadmin.ini.tpl /cuberite/webadmin.ini.tpl
 
 COPY entrypoint.sh    /entrypoint.sh
 COPY webadmin.ini.tpl /opt/webadmin.ini.tpl
-
-#RUN envsubst < /cuberite/webadmin.ini.tpl > /cuberite/webadmin.ini
 
 VOLUME /cuberite
 
