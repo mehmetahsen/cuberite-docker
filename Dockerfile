@@ -1,11 +1,12 @@
 FROM ubuntu:focal
 
-WORKDIR /opt/cuberite
-
 RUN apt update && apt install -y \
     curl gettext-base openssl && \
-    curl -sSfL https://download.cuberite.org | sh && \
     rm -rf /var/lib/apt/lists/*
+
+COPY files/easyinstall.sh /opt/cuberite/easyinstall.sh
+    
+RUN  cd /opt/cuberite && /opt/cuberite/easyinstall.sh
     
 ENV CUBERITE_USERNAME="admin" \
     CUBERITE_PASSWORD="cuberite" \
