@@ -10,6 +10,15 @@ Head to https://localhost:8080 for the webadmin panel.
 
 Default username is `admin` and password is `cuberite` 
 
+### Build
+You need to clone this repo and build the image.
+
+```bash
+git clone https://github.com/mehmetahsen/cuberite-docker.git
+cd cuberite-docker
+docker build --tag cuberite .
+```
+
 ### Quick way
 
 ```bash
@@ -38,6 +47,22 @@ docker run --name cuberite --publish 8080:8080 --publish 25565:25565 \
 docker run --name cuberite --publish 8080:8080 --publish 25565:25565 \
             --volume cuberite:/cuberite --detach --tty --restart unless-stopped \
             --env CUBERITE_USERNAME='admin' --env CUBERITE_PASSWORD='cuberite' cuberite
+```
+
+### docker-compose.yml
+```yaml
+cuberite:
+build: cuberite-docker/
+environment:
+  - CUBERITE_USERNAME=admin
+  - CUBERITE_PASSWORD=cuberite
+volumes:
+  - /mnt/cuberite:/cuberite
+ports:
+  - 8080:8080
+  - 25565:25565
+tty: true
+restart: unless-stopped
 ```
 
 ## Options
