@@ -5,7 +5,7 @@ on:
     branches: master
 
 jobs:
-  multi:
+  multiarch-builder:
     runs-on: ubuntu-latest
     steps:
       -
@@ -31,7 +31,7 @@ jobs:
         with:
           context: .
           file: ./Dockerfile
-          platforms: linux/386,linux/amd64,linux/arm/v7
+          platforms: linux/amd64,linux/arm/v7
           push: true
           tags: |
             mehmetahsen/cuberite:latest

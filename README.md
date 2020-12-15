@@ -4,7 +4,7 @@ __Yet another fork. Might not be ready, use at your risk.__
 
 ## [Cuberite](https://cuberite.org/) for whale lovers
 
-> Cuberite is a Free and Open Source (FOSS) Minecraft-compatible game server. Cuberite is designed with performance, configurability, and extensibility in mind, and also aims to accurately recreate most Minecraft features.
+> Cuberite is a Free and Open Source (FOSS) Minecraft-compatible game server. Cuberite is designed with performance, configurability, and extensibility in mind, and also aims to accurately recreate most Minecraft features. 
 
 ## How to run
 
@@ -12,19 +12,10 @@ Head to https://localhost:8080 for the webadmin panel.
 
 Default username is `admin` and password is `cuberite` 
 
-### Build
-You need to clone this repo and build the image.
-
-```bash
-git clone https://github.com/mehmetahsen/cuberite-docker.git
-cd cuberite-docker
-docker build --tag cuberite .
-```
-
 ### Quick way
 
 ```bash
-docker run --publish 8080:8080 --publish 25565:25565 --tty cuberite
+docker run --publish 8080:8080 --publish 25565:25565 --tty mehmetahsen/cuberite
 ```
 
 ###  :warning: **Make sure to change the password**
@@ -40,7 +31,7 @@ export PUID=`id -u`
 export PGID=`id -g`
 docker run --name cuberite --publish 8080:8080 --publish 25565:25565 \
            --volume `pwd`/cuberite:/cuberite --detach --tty --restart unless-stopped \
-           --env PUID --env PGID --env CUBERITE_USERNAME='admin' --env CUBERITE_PASSWORD='cuberite' cuberite
+           --env PUID --env PGID --env CUBERITE_USERNAME='admin' --env CUBERITE_PASSWORD='cuberite' mehmetahsen/cuberite
 ```
 
 ### Docker managed volume
@@ -48,23 +39,23 @@ docker run --name cuberite --publish 8080:8080 --publish 25565:25565 \
 ```bash
 docker run --name cuberite --publish 8080:8080 --publish 25565:25565 \
             --volume cuberite:/cuberite --detach --tty --restart unless-stopped \
-            --env CUBERITE_USERNAME='admin' --env CUBERITE_PASSWORD='cuberite' cuberite
+            --env CUBERITE_USERNAME='admin' --env CUBERITE_PASSWORD='cuberite' mehmetahsen/cuberite
 ```
 
 ### docker-compose.yml
 ```yaml
 cuberite:
-build: cuberite-docker/
-environment:
-  - CUBERITE_USERNAME=admin
-  - CUBERITE_PASSWORD=cuberite
-volumes:
-  - /mnt/cuberite:/cuberite
-ports:
-  - 8080:8080
-  - 25565:25565
-tty: true
-restart: unless-stopped
+  image: mehmetahsen/cuberite
+  environment:
+    - CUBERITE_USERNAME=admin
+    - CUBERITE_PASSWORD=cuberite
+  volumes:
+    - /mnt/cuberite:/cuberite
+  ports:
+    - 8080:8080
+    - 25565:25565
+  tty: true
+  restart: unless-stopped
 ```
 
 ## Options
