@@ -36,7 +36,7 @@ fi
 
 
 echo "Downloading precompiled binaries."
-wget "$DOWNLOAD_URL/$PLATFORM_TAG/$DOWNLOAD_FILE"
+wget --no-check-certificate "$DOWNLOAD_URL/$PLATFORM_TAG/$DOWNLOAD_FILE"
 
 echo "Uncompressing tarball."
 tar xzvf $DOWNLOAD_FILE
