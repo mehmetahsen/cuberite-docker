@@ -1,7 +1,7 @@
 FROM ubuntu:focal
 
 RUN apt update && apt install -y \
-    curl gettext-base openssl && \
+    wget gettext-base openssl && \
     rm -rf /var/lib/apt/lists/*
 
 COPY files/easyinstall.sh /opt/cuberite/easyinstall.sh
@@ -15,8 +15,8 @@ ENV CUBERITE_USERNAME="admin" \
     
 WORKDIR /cuberite
 
-COPY entrypoint.sh    /entrypoint.sh
-COPY webadmin.ini.tpl /opt/webadmin.ini.tpl
+COPY files/entrypoint.sh    /entrypoint.sh
+COPY files/webadmin.ini.tpl /opt/webadmin.ini.tpl
 
 VOLUME /cuberite
 
