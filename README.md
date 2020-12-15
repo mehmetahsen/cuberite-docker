@@ -1,4 +1,5 @@
 ![image build and push](https://github.com/mehmetahsen/cuberite-docker/workflows/image%20build%20and%20push/badge.svg?branch=master)
+![release stable image](https://github.com/mehmetahsen/cuberite-docker/workflows/release%20stable%20image/badge.svg)
 
 __Yet another fork. Might not be ready, use at your risk.__
 
