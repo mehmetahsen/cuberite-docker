@@ -3,7 +3,7 @@
 
 __Yet another fork. Might not be ready, use at your risk.__
 
-## [Cuberite](https://cuberite.org/) for whale lovers
+## [Cuberite](https://cuberite.org/) for whale and raspberry lovers
 
 > Cuberite is a Free and Open Source (FOSS) Minecraft-compatible game server. Cuberite is designed with performance, configurability, and extensibility in mind, and also aims to accurately recreate most Minecraft features. 
 
@@ -12,6 +12,14 @@ __Yet another fork. Might not be ready, use at your risk.__
 Head to https://localhost:8080 for the webadmin panel.
 
 Default username is `admin` and password is `cuberite` 
+
+At this point there is no difference between these two, but that can change in future:
+
+**Stable:** `mehmetahsen/cuberite:stable` This tag is changed whenever a release happens. It's based on latest commit hash for __stable__ branch.
+
+**Latest:** `mehmetahsen/cuberite:latest` This tag is changed whenever master changes.
+
+Check out GitHub Actions if you're more interested. [.github/workflows/](.github/workflows/) and [mehmetahsen/cuberite-docker GitHub Actions](https://github.com/mehmetahsen/cuberite-docker/actions)
 
 ### Quick way
 
