@@ -30,7 +30,14 @@ else # After dropping root
   
   # Template webadmin.ini if one doesn't exist already
   if [ ! -f webadmin.ini ]; then
-    envsubst < /opt/webadmin.ini.tpl > webadmin.ini
+    cat<<EOF > webadmin.ini
+[User:${CUBERITE_USERNAME}]
+Password=${CUBERITE_PASSWORD}
+
+[WebAdmin]
+Enabled=1
+Ports=8080
+EOF
   fi  
   # File contains password, shouldn't be readable by others
   chmod 640 webadmin.ini

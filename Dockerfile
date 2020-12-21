@@ -4,11 +4,9 @@ COPY files/easyinstall.sh /opt/cuberite/easyinstall.sh
 
 RUN  cd /opt/cuberite && /opt/cuberite/easyinstall.sh
 
-
 FROM ubuntu as cuberite
 
-RUN apt update && apt -y install \
-       gettext-base openssl  && \
+RUN apt update && apt -y install openssl && \
     rm -rf /var/lib/apt/lists/*
         
 ENV CUBERITE_USERNAME="admin" \
@@ -19,7 +17,6 @@ ENV CUBERITE_USERNAME="admin" \
 COPY --from=downloader /opt/cuberite/ /opt/cuberite/
     
 COPY files/entrypoint.sh    /entrypoint.sh
-COPY files/webadmin.ini.tpl /opt/webadmin.ini.tpl
 
 VOLUME /cuberite
 
