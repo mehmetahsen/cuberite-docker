@@ -7,6 +7,8 @@ on:
       - 'docs/**'
       - '**.md'
       - 'env.sh'
+  schedule:
+    - cron: "0 4 */8 * *" # almost weekly
 
 jobs:
   multiarch-builder:
