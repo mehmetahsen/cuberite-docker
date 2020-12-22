@@ -39,4 +39,13 @@ echo "Uncompressing tarball."
 tar xzvf $DOWNLOAD_FILE
 echo "Done."
 
+echo "Downloading Login plugin.."
+wget "https://github.com/NiLSPACE/Login/archive/master.zip"
+
+echo "Unpacking Login plugin"
+cd Plugins
+unzip ../master.zip
+mv Login-master Login
+echo "Done."
+
 }
