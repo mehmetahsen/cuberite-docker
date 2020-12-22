@@ -1,11 +1,11 @@
 ![image build and push](https://github.com/mehmetahsen/cuberite-docker/workflows/image%20build%20and%20push/badge.svg?branch=master)
 ![release stable image](https://github.com/mehmetahsen/cuberite-docker/workflows/release%20stable%20image/badge.svg)
 
-__Yet another fork. Might not be ready, use at your risk.__
-
 ## [Cuberite](https://cuberite.org/) for whale and raspberry lovers
 
 > Cuberite is a Free and Open Source (FOSS) Minecraft-compatible game server. Cuberite is designed with performance, configurability, and extensibility in mind, and also aims to accurately recreate most Minecraft features. 
+
+Containers are cross built for armv7, so they run raspberry pi too!
 
 ## How to run
 
@@ -13,11 +13,11 @@ Head to https://localhost:8080 for the webadmin panel.
 
 Default username is `admin` and password is `cuberite` 
 
-At this point there is no difference between these two, but that can change in future:
+Latest is built automatically, stable follows behind via releases.
 
-**Stable:** `mehmetahsen/cuberite:stable` This tag is changed whenever a release happens. It's based on latest commit hash for __stable__ branch.
+**Stable:** `mehmetahsen/cuberite:stable`
 
-**Latest:** `mehmetahsen/cuberite:latest` This tag is changed whenever master changes.
+**Latest:** `mehmetahsen/cuberite:latest`
 
 Check out GitHub Actions if you're more interested. [.github/workflows/](.github/workflows/) and [mehmetahsen/cuberite-docker GitHub Actions](https://github.com/mehmetahsen/cuberite-docker/actions)
 
