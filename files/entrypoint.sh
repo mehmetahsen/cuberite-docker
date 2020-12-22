@@ -3,10 +3,85 @@
 # Exit on error, print extra
 set -ex
 
+
 # nofail functions for the config copy
 # we copy/link them only if it doesn't exist
 cpnofail() { cp -r  $1 $2 || true; return 0; }
 lnnofail() { ln -s $1 $2 || true; return 0; }
+settings_ini() {
+cat <<EOF > settings.ini
+[Authentication]
+Authenticate=$AUTHENTICATION_AUTHENTICATE
+AllowBungeeCord=$AUTHENTICATION_ALLOWBUNGEECORD
+Server=$AUTHENTICATION_SERVER
+Address=$AUTHENTICATION_ADDRESS
+
+[MojangAPI]
+NameToUUIDServer=$MOJANGAPI_NAMETOUUIDSERVER
+NameToUUIDAddress=$MOJANGAPI_NAMETOUUIDADDRESS
+UUIDToProfileServer=$MOJANGAPI_UUIDTOPROFILESERVER
+UUIDToProfileAddress=$MOJANGAPI_UUIDTOPROFILEADDRESS
+
+[Server]
+Description=$SERVER_DESCRIPTION
+ShutdownMessage=$SERVER_SHUTDOWNMESSAGE
+MaxPlayers=$SERVER_MAXPLAYERS
+HardcoreEnabled=$SERVER_HARDCOREENABLED
+AllowMultiLogin=$SERVER_ALLOWMULTILOGIN
+ResourcePackUrl=$SERVER_RESOURCEPACKURL
+Ports=$SERVER_PORTS
+AllowMultiWorldTabCompletion=$SERVER_ALLOWMULTIWORLDTABCOMPLETION
+DefaultViewDistance=$SERVER_DEFAULTVIEWDISTANCE
+
+[RCON]
+Enabled=$RCON_ENABLED
+
+[AntiCheat]
+LimitPlayerBlockChanges=$ANTICHEAT_LIMITPLAYERBLOCKCHANGES
+
+[PlayerData]
+LoadOfflinePlayerData=$PLAYERDATA_LOADOFFLINEPLAYERDATA
+LoadNamedPlayerData=$PLAYERDATA_LOADNAMEDPLAYERDATA
+
+[Worlds]
+DefaultWorld=$WORLDS_DEFAULTWORLD
+
+[WorldPaths]
+world=$WORLDPATHS_WORLD
+
+[Plugins]
+Core=$PLUGINS_CORE
+ChatLog=$PLUGINS_CHATLOG
+ProtectionAreas=$PLUGINS_PROTECTIONAREAS
+Login=$PLUGINS_LOGIN
+
+[DeadlockDetect]
+Enabled=$DEADLOCKDETECT_ENABLED
+IntervalSec=$DEADLOCKDETECT_INTERVALSEC
+EOF
+}
+add_default_group_permission() {
+  curl --insecure --user "${CUBERITE_USERNAME}:${CUBERITE_PASSWORD}" -H 'Content-Type: application/x-www-form-urlencoded'  --data-raw "Permission=$1&subpage=addpermission&GroupName=Default" 'https://localhost:8080/webadmin/Core/Permissions'     
+}
+
+reload_server() {
+  curl --insecure --user "${CUBERITE_USERNAME}:${CUBERITE_PASSWORD}" -H 'Content-Type: application/x-www-form-urlencoded' --data-raw 'ReloadServer=Reload+Server' 'https://localhost:8080/webadmin/Core/Manage+Server'    
+}
+default_login_permissions() {
+  # poll till cuberite is up
+  echo 'Update login permissions: Waiting for cuberite...'
+  while ! curl --output /dev/null --insecure --silent --head --fail https://localhost:8080 > /dev/null; do
+    sleep 1
+  done
+  echo 'Update login permissons: Cuberite is up, updating permissions with default login policy.'
+  # cuberite is up!
+  for permission in login.changepass login.login login.register; do
+    add_default_group_permission $permission
+  done
+  echo 'Update login permissons: Permissions updated, will reload the server.'
+  reload_server
+  echo 'Update login permissons: Done.'
+}
 
 if [ "$(id cuberite --user)" != "$PUID" ]; then # As root. cuberite user wasn't created yet
 
@@ -36,7 +111,7 @@ else # After dropping root
   chmod 640 webadmin.ini
   
   # Check if we have https cert & key, if not, generate one
-  if [ -z "$NOHTTPS" ]; then 
+  if [ $HTTPS -eq 1 ]; then 
     if [ ! -f https/httpscert.crt -o ! -f https/httpskey.pem ]; then
         echo "Couldn't find cert and/or key, generating a pair."
         mkdir -p https
@@ -67,6 +142,20 @@ else # After dropping root
   cpnofail /opt/cuberite/webadmin/files/guest.html /cuberite/files/guest.html
   ln -sf /cuberite/files/guest.html /opt/cuberite/webadmin/files/guest.html #overwrite the original file
 
+  if [ $CREATE_SETTINGS_INI -eq 1 ]; then
+    echo "CREATE_SETTINGS_INI option set, creating settings.ini"
+    if [ -f settings.ini ]; then
+      echo "A settings.ini file already exists, not touching."
+    else
+      settings_ini
+    fi
+  fi
+  
+  if [ $DEFAULT_LOGIN_PERMISSIONS -eq 1 ]; then
+    echo "Updating default login permissions, anyone can register, login and change their password."
+    default_login_permissions &
+  fi
+  
   # Run
   exec $@
 fi

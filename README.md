@@ -69,18 +69,47 @@ cuberite:
 
 ## Options
 
-- `CUBERITE_USERNAME`="admin"  Username for the Cuberite admin webpanel.
+`CREATE_SETTINGS_INI` will turn off online-mode, activate Login plugin plugin with permissive defaults. It doesn't do anything if `settings.ini` already exists.
 
-- `CUBERITE_PASSWORD`="cuberite" Password for the Cuberite admin webpanel.
 
-- `PUID`="46372" Linux uid cuberite should run with inside the container. Has implications when using local mount for `/cuberite`.
-
-- `PGID`="46372" Linux gid cuberite should run with inside the container. Has implications when using local mount for `/cuberite`.
-
-- `NOHTTPS`: When defined, it won't generate cert pair, even if they don't exist. Default behaviour is to generate self-signed certs and enable HTTPS only.
-
-- `files/guest.html`: If you like to change the greeting for webadmin panel, head to this file.
-
+Environment variable | Default | Description
+--- | --- | ---
+CUBERITE_USERNAME | admin | Username for the Cuberite admin webpanel.
+CUBERITE_PASSWORD | cuberite | Password for the Cuberite admin webpanel.
+PUID | 46372 | Linux uid cuberite should run with inside the container. Has implications when using local mount for `/cuberite`.
+PGID | 46372 | Linux gid cuberite should run with inside the container. Has implications when using local mount for `/cuberite`.
+HTTPS | 1 | Enables HTTPS with self-signed certs.
+CREATE_SETTINGS_INI | 0 | Will create a settings.ini file, if it didn't exist.
+DEFAULT_LOGIN_PERMISSIONS | 1 | Will allow anyone to login, register via Login plugin.
+AUTHENTICATION_AUTHENTICATE | 1 | Online/offline mode
+AUTHENTICATION_ALLOWBUNGEECORD | 0 | 
+AUTHENTICATION_SERVER | 'sessionserver.mojang.com' | 
+AUTHENTICATION_ADDRESS | '/session/minecraft/hasJoined?username | %USERNAME%&serverId | %SERVERID%' | 
+MOJANGAPI_NAMETOUUIDSERVER | 'api.mojang.com' | 
+MOJANGAPI_NAMETOUUIDADDRESS | '/profiles/minecraft' | 
+MOJANGAPI_UUIDTOPROFILESERVER | 'sessionserver.mojang.com' | 
+MOJANGAPI_UUIDTOPROFILEADDRESS | '/session/minecraft/profile/%UUID%?unsigned | false' | 
+SERVER_DESCRIPTION | 'Cuberite - in C++!' | Server description.
+SERVER_SHUTDOWNMESSAGE | 'Server shutdown' | Server shutdown message.
+SERVER_MAXPLAYERS | 100 | Maximum number of players allowed.
+SERVER_HARDCOREENABLED | 0 | 
+SERVER_ALLOWMULTILOGIN | 0 | 
+SERVER_RESOURCEPACKURL | '' | 
+SERVER_PORTS | 25565 | 
+SERVER_ALLOWMULTIWORLDTABCOMPLETION | 1 | 
+SERVER_DEFAULTVIEWDISTANCE | 10 | 
+RCON_ENABLED | 0 | 
+ANTICHEAT_LIMITPLAYERBLOCKCHANGES | 1 | 
+PLAYERDATA_LOADOFFLINEPLAYERDATA | 0 | 
+PLAYERDATA_LOADNAMEDPLAYERDATA | 1 | 
+WORLDS_DEFAULTWORLD | 'world' | 
+WORLDPATHS_WORLD | 'world' | 
+PLUGINS_CORE | 1 | Enable core
+PLUGINS_CHATLOG | 1 | Enable chatlog
+PLUGINS_PROTECTIONAREAS | 0 | Enable protection areas
+PLUGINS_LOGIN | 0 | Enable Login
+DEADLOCKDETECT_ENABLED | 1 | 
+DEADLOCKDETECT_INTERVALSEC | 20 | 
 
 ## Architecture
 
