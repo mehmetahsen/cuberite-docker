@@ -79,8 +79,12 @@ CUBERITE_PASSWORD | cuberite | Password for the Cuberite admin webpanel.
 PUID | 46372 | Linux uid cuberite should run with inside the container. Has implications when using local mount for `/cuberite`.
 PGID | 46372 | Linux gid cuberite should run with inside the container. Has implications when using local mount for `/cuberite`.
 HTTPS | 1 | Enables HTTPS with self-signed certs.
-CREATE_SETTINGS_INI | 0 | Will create a settings.ini file, if it didn't exist.
-DEFAULT_LOGIN_PERMISSIONS | 1 | Will allow anyone to login, register via Login plugin.
+DEFAULT_LOGIN_PERMISSIONS | 1 | Will allow anyone to register&login via Login plugin. Needs PLUGINS_LOGIN=1
+CREATE_SETTINGS_INI | 0 | Will create a settings.ini file, if it didn't exist. All options below require this.
+
+Below options are from `settings.ini`, wherein format is `SECTION_KEY`. It's **not** a dynamic mapping.
+Environment variable | Default | Description
+--- | --- | ---
 AUTHENTICATION_AUTHENTICATE | 1 | Online/offline mode
 AUTHENTICATION_ALLOWBUNGEECORD | 0 | 
 AUTHENTICATION_SERVER | 'sessionserver.mojang.com' | 
