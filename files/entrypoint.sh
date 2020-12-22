@@ -3,7 +3,6 @@
 # Exit on error, print extra
 set -ex
 
-
 # nofail functions for the config copy
 # we copy/link them only if it doesn't exist
 cpnofail() { cp -r  $1 $2 || true; return 0; }
@@ -61,16 +60,16 @@ IntervalSec=$DEADLOCKDETECT_INTERVALSEC
 EOF
 }
 add_default_group_permission() {
-  curl --insecure --user "${CUBERITE_USERNAME}:${CUBERITE_PASSWORD}" -H 'Content-Type: application/x-www-form-urlencoded'  --data-raw "Permission=$1&subpage=addpermission&GroupName=Default" 'https://localhost:8080/webadmin/Core/Permissions'     
+  curl --silent --output /dev/null --insecure --user "${CUBERITE_USERNAME}:${CUBERITE_PASSWORD}" -H 'Content-Type: application/x-www-form-urlencoded'  --data-raw "Permission=$1&subpage=addpermission&GroupName=Default" "$BASE_URL/webadmin/Core/Permissions" --output /dev/null
 }
 
 reload_server() {
-  curl --insecure --user "${CUBERITE_USERNAME}:${CUBERITE_PASSWORD}" -H 'Content-Type: application/x-www-form-urlencoded' --data-raw 'ReloadServer=Reload+Server' 'https://localhost:8080/webadmin/Core/Manage+Server'    
+  curl --silent --output /dev/null --insecure --user "${CUBERITE_USERNAME}:${CUBERITE_PASSWORD}" -H 'Content-Type: application/x-www-form-urlencoded' --data-raw 'ReloadServer=Reload+Server' "$BASE_URL/webadmin/Core/Manage+Server"
 }
 default_login_permissions() {
   # poll till cuberite is up
   echo 'Update login permissions: Waiting for cuberite...'
-  while ! curl --output /dev/null --insecure --silent --head --fail https://localhost:8080 > /dev/null; do
+  while ! curl --insecure --silent --head --fail --output /dev/null $BASE_URL; do
     sleep 1
   done
   echo 'Update login permissons: Cuberite is up, updating permissions with default login policy.'
@@ -118,7 +117,8 @@ EOF
   chmod 640 webadmin.ini
   
   # Check if we have https cert & key, if not, generate one
-  if [ $HTTPS -eq 1 ]; then 
+  if [ $HTTPS -eq 1 ]; then
+    export PROTOCOL='https'
     if [ ! -f https/httpscert.crt -o ! -f https/httpskey.pem ]; then
         echo "Couldn't find cert and/or key, generating a pair."
         mkdir -p https
@@ -131,8 +131,11 @@ EOF
     lnnofail /cuberite/https/httpscert.crt /opt/cuberite/webadmin/
     lnnofail /cuberite/https/httpskey.pem  /opt/cuberite/webadmin/
   else
-    echo "NOHTTPS is set, skipping cert generation."
+    export PROTOCOL='http'
+    echo "HTTPS is not set, skipping cert generation."
   fi
+
+  export BASE_URL="${PROTOCOL}://localhost:8080"
 
   # For webadmin/files/guest.html file only
   mkdir -p files
