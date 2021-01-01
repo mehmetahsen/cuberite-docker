@@ -5,7 +5,7 @@
 
 > Cuberite is a Free and Open Source (FOSS) Minecraft-compatible game server. Cuberite is designed with performance, configurability, and extensibility in mind, and also aims to accurately recreate most Minecraft features. 
 
-Containers are cross built for armv7, so they run raspberry pi too!
+Containers are cross built for armv7, so they run on Raspberry Pi too!
 
 ## How to run
 
