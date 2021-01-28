@@ -161,7 +161,7 @@ EOF
     fi
   fi
   
-  if [ $DEFAULT_LOGIN_PERMISSIONS -eq 1 ]; then
+  if [ $DEFAULT_LOGIN_PERMISSIONS -eq 1 -a $PLUGINS_LOGIN -eq 1 ]; then
     echo "Updating default login permissions, anyone can register, login and change their password."
     default_login_permissions &
   fi
