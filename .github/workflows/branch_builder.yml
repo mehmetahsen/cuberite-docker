@@ -1,12 +1,14 @@
-name: branch bottest
+name: Bot test
 
 on:
   push:
-    branches:
-      - '*'
-      - '!master'
     paths-ignore:
       - 'docs/**'
+      - '**.md'
+      - 'env.sh'
+  pull_request:
+    paths-ignore:
+      -  'docs/**'
       - '**.md'
       - 'env.sh'
 
