@@ -1,0 +1,52 @@
+name: Bot test
+
+on:
+  push:
+    paths-ignore:
+      - 'docs/**'
+      - '**.md'
+      - 'env.sh'
+  pull_request:
+    paths-ignore:
+      -  'docs/**'
+      - '**.md'
+      - 'env.sh'
+
+jobs:
+  bottest:
+    name:     Test with a bot
+    runs-on:  ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref:  ${{ github.ref }}
+      - name: Docker build cuberite
+        run: docker build --tag cuberite .
+      - name: Docker build testbot
+        run:  docker build --tag testbot testbot
+      - name: Docker network create mine
+        run: docker network create mine
+      - name: Run cuberite
+        run: |
+          docker run --name cuberite --network mine \
+            -e CREATE_SETTINGS_INI=1 \
+            -e AUTHENTICATION_AUTHENTICATE=0 \
+            --tty --detach -p 25565:25565 -p 8080:8080 \
+            cuberite
+          echo "Wait for cuberite to be ready..."
+          if ! docker run --network mine curlimages/curl --retry 6  --retry-all-errors \
+            --retry-delay 10 --retry-max-time 60 \
+            --connect-timeout 5 --max-time 10 \
+            --insecure https://cuberite:8080
+          then
+            docker logs cuberite
+            exit 1
+          fi
+      - name: Run testbot
+        run:  docker run --network mine testbot cuberite;
+      - name: Validate server logs
+        run: |
+          docker logs cuberite | grep --fixed-strings 'testbot has joined'
+          docker logs cuberite | grep --fixed-strings 'Servus!'
+          docker logs cuberite | grep --fixed-strings 'testbot has left'

@@ -1,16 +1,25 @@
 ![image build and push](https://github.com/mehmetahsen/cuberite-docker/workflows/image%20build%20and%20push/badge.svg?branch=master)
+![release stable image](https://github.com/mehmetahsen/cuberite-docker/workflows/release%20stable%20image/badge.svg)
 
-__Yet another fork. Might not be ready, use at your risk.__
-
-## [Cuberite](https://cuberite.org/) for whale lovers
+## [Cuberite](https://cuberite.org/) for whale and raspberry lovers
 
 > Cuberite is a Free and Open Source (FOSS) Minecraft-compatible game server. Cuberite is designed with performance, configurability, and extensibility in mind, and also aims to accurately recreate most Minecraft features. 
+
+Containers are cross built for armv7, so they run on Raspberry Pi too!
 
 ## How to run
 
 Head to https://localhost:8080 for the webadmin panel.
 
 Default username is `admin` and password is `cuberite` 
+
+Latest is built automatically, stable follows behind via releases.
+
+**Stable:** `mehmetahsen/cuberite:stable`
+
+**Latest:** `mehmetahsen/cuberite:latest`
+
+Check out GitHub Actions if you're more interested. [.github/workflows/](.github/workflows/) and [mehmetahsen/cuberite-docker GitHub Actions](https://github.com/mehmetahsen/cuberite-docker/actions)
 
 ### Quick way
 
@@ -60,18 +69,51 @@ cuberite:
 
 ## Options
 
-- `CUBERITE_USERNAME`="admin"  Username for the Cuberite admin webpanel.
+`CREATE_SETTINGS_INI` will turn off online-mode, activate Login plugin plugin with permissive defaults. It doesn't do anything if `settings.ini` already exists.
 
-- `CUBERITE_PASSWORD`="cuberite" Password for the Cuberite admin webpanel.
 
-- `PUID`="46372" Linux uid cuberite should run with inside the container. Has implications when using local mount for `/cuberite`.
+Environment variable | Default | Description
+--- | --- | ---
+CUBERITE_USERNAME | admin | Username for the Cuberite admin webpanel.
+CUBERITE_PASSWORD | cuberite | Password for the Cuberite admin webpanel.
+PUID | 46372 | Linux uid cuberite should run with inside the container. Has implications when using local mount for `/cuberite`.
+PGID | 46372 | Linux gid cuberite should run with inside the container. Has implications when using local mount for `/cuberite`.
+HTTPS | 1 | Enables HTTPS with self-signed certs.
+DEFAULT_LOGIN_PERMISSIONS | 1 | Will allow anyone to register&login via Login plugin. Needs PLUGINS_LOGIN=1
+CREATE_SETTINGS_INI | 0 | Will create a settings.ini file, if it didn't exist. All options below require this.
 
-- `PGID`="46372" Linux gid cuberite should run with inside the container. Has implications when using local mount for `/cuberite`.
-
-- `NOHTTPS`: When defined, it won't generate cert pair, even if they don't exist. Default behaviour is to generate self-signed certs and enable HTTPS only.
-
-- `files/guest.html`: If you like to change the greeting for webadmin panel, head to this file.
-
+Below options are from `settings.ini`, wherein format is `SECTION_KEY`. It's **not** a dynamic mapping.
+Environment variable | Default | Description
+--- | --- | ---
+AUTHENTICATION_AUTHENTICATE | 1 | Online/offline mode
+AUTHENTICATION_ALLOWBUNGEECORD | 0 | 
+AUTHENTICATION_SERVER | 'sessionserver.mojang.com' | 
+AUTHENTICATION_ADDRESS | '/session/minecraft/hasJoined?username | %USERNAME%&serverId | %SERVERID%' | 
+MOJANGAPI_NAMETOUUIDSERVER | 'api.mojang.com' | 
+MOJANGAPI_NAMETOUUIDADDRESS | '/profiles/minecraft' | 
+MOJANGAPI_UUIDTOPROFILESERVER | 'sessionserver.mojang.com' | 
+MOJANGAPI_UUIDTOPROFILEADDRESS | '/session/minecraft/profile/%UUID%?unsigned | false' | 
+SERVER_DESCRIPTION | 'Cuberite - in C++!' | Server description.
+SERVER_SHUTDOWNMESSAGE | 'Server shutdown' | Server shutdown message.
+SERVER_MAXPLAYERS | 100 | Maximum number of players allowed.
+SERVER_HARDCOREENABLED | 0 | 
+SERVER_ALLOWMULTILOGIN | 0 | 
+SERVER_RESOURCEPACKURL | '' | 
+SERVER_PORTS | 25565 | 
+SERVER_ALLOWMULTIWORLDTABCOMPLETION | 1 | 
+SERVER_DEFAULTVIEWDISTANCE | 10 | 
+RCON_ENABLED | 0 | 
+ANTICHEAT_LIMITPLAYERBLOCKCHANGES | 1 | 
+PLAYERDATA_LOADOFFLINEPLAYERDATA | 0 | 
+PLAYERDATA_LOADNAMEDPLAYERDATA | 1 | 
+WORLDS_DEFAULTWORLD | 'world' | 
+WORLDPATHS_WORLD | 'world' | 
+PLUGINS_CORE | 1 | Enable core
+PLUGINS_CHATLOG | 1 | Enable chatlog
+PLUGINS_PROTECTIONAREAS | 0 | Enable protection areas
+PLUGINS_LOGIN | 0 | Enable Login
+DEADLOCKDETECT_ENABLED | 1 | 
+DEADLOCKDETECT_INTERVALSEC | 20 | 
 
 ## Architecture
 
