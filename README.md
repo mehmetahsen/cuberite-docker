@@ -13,13 +13,9 @@ Head to https://localhost:8080 for the webadmin panel.
 
 Default username is `admin` and password is `cuberite` 
 
-Latest is built automatically, stable follows behind via releases.
+**Latest build** `mehmetahsen/cuberite:latest`
 
-**Stable:** `mehmetahsen/cuberite:stable`
-
-**Latest:** `mehmetahsen/cuberite:latest`
-
-Check out GitHub Actions if you're more interested. [.github/workflows/](.github/workflows/) and [mehmetahsen/cuberite-docker GitHub Actions](https://github.com/mehmetahsen/cuberite-docker/actions)
+Check out GitHub Actions if you're interested. [.github/workflows/](.github/workflows/) and [mehmetahsen/cuberite-docker GitHub Actions](https://github.com/mehmetahsen/cuberite-docker/actions)
 
 ### Quick way
 
